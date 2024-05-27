@@ -3,12 +3,14 @@ import uuid
 from datetime import datetime
 
 """ BASECLASS"""
+
+
 class BaseModel:
     """ Base class for other models """
 
     def __init__(self):
         """ initiates a new basemodel instance """
-        self.id = str.(uuid.uuid4())
+        self.id = str(uuid.uuid4())
         self.time_create = datetime.now()
         self.update_at = self.time_create
 
@@ -16,7 +18,7 @@ class BaseModel:
         """ returns string representation if instance """
         return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
 
-    def saving(self):
+    def save(self):
         """ update the public insatnce to current datetime"""
         self.update_at = datetime.now()
 
