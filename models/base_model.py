@@ -11,8 +11,8 @@ class BaseModel:
     def __init__(self):
         """ initiates a new basemodel instance """
         self.id = str(uuid.uuid4())
-        self.time_create = datetime.now()
-        self.update_at = self.time_create
+        self.created_at = datetime.now()
+        self.updated_at = self.created_at
 
     def __str__(self):
         """ returns string representation if instance """
@@ -20,13 +20,13 @@ class BaseModel:
 
     def save(self):
         """ update the public insatnce to current datetime"""
-        self.update_at = datetime.now()
+        self.updated_at = datetime.now()
 
     def to_dict(self):
         """ Return a dictionary containing all keywords and values of dict"""
         result = self.__dict__.copy()
         result['__class__'] = self.__class__.__name__
-        result['time_create'] = self.time_create.isoformat()
-        result['update_at'] = self.update_at.isoformat()
+        result['created_at'] = self.created_at.isoformat()
+        result['updated_at'] = self.updated_at.isoformat()
 
         return result
