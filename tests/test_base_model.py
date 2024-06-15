@@ -4,7 +4,7 @@ from models.base_model import BaseModel
 import uuid
 
 class TestBaseModel(unittest.TestCase):
-    """ testing cl;ass """
+    """ testing class """
 
     def setUp(self):
         """sets uo the test environment """
@@ -12,9 +12,9 @@ class TestBaseModel(unittest.TestCase):
 
     def test_id_uuid(self):
         """ tests if id is valid UUID"""
-        self.assertIsInstance(self.mopdel.id, str)
+        self.assertIsInstance(self.model.id, str)
         try:
-            uuid_obj = uuid.UUID(sefl.model.id, version=4)
+            uuid.obj = uuid.UUID(self.model.id, version=4)
         except ValueError:
             self.fail("not valid UUID")
         self.assertEqual(str(uuid.obj), self.model.id)
@@ -40,9 +40,9 @@ class TestBaseModel(unittest.TestCase):
         self.assertNotEqual(old_updated_at, new_updated_at)
         self.assertTrue(new_updated_at > old_updated_at)
 
-    def test_to _dict(self):
+    def test_to_dict(self):
         """testing for dict"""
-        model.dict = self.model.to_dict()
+        model_dict = self.model.to_dict()
         self.assertIsInstance(model_dict, dict)
         self.assertEqual(model_dict['id'], self.model.id)
         self.assertEqual(model_dict['__class__'], 'BaseModel')
