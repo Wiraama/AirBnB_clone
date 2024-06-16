@@ -2,7 +2,7 @@
 """module of class file storange"""
 import json
 from os import path
-
+from models.base_model import BaseModel
 class FileStorage:
     """ class filestorage """
     __file_path = "file.json"
@@ -17,12 +17,12 @@ class FileStorage:
 
     def save(self):
         """ serialize __object to __file_path """
-        serialized_object = {}
+        serialized_objects = {}
         for key, obj in self.__objects.items():
-            serialized_object[key] = obj.to_dict()
+            serialized_objects[key] = obj.to_dict()
 
         with open(self.__file_path, 'w') as file:
-            json.dump(serialized_object, file)
+            json.dump(serialized_objects, file)
 
     def reload(self):
         """deserializing json file to obj only if __file_path exist|"""
@@ -34,5 +34,5 @@ class FileStorage:
                         class_name = value["__class__"]
                         cls = eval(class_name)
                         self.__objects[key] = cls(**value)
-                except json.JSONDecoderError:
+                except json.JSONDecodeError:
                     pass
