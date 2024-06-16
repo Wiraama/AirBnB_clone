@@ -13,7 +13,7 @@ class HBNBCommand(cmd.Cmd):
         print()
         return True
 
-    def do_new_line(self, arg):
+    def emptyline(self):
         """ Do nothing just pass """
         pass
 
