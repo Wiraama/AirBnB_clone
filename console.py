@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+module to interpreate for an application
+"""
 import cmd
 
 class HBNBCommand(cmd.Cmd):
