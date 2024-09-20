@@ -1,7 +1,13 @@
 #!/usr/bin/python3
+import sys
+import os
 import unittest
 from datetime import datetime
-from base_model import BaseModel
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from models.base_model import BaseModel
+
 
 class TestBaseModel(unittest.TestCase):
     """ test for each function """
