@@ -8,7 +8,7 @@ class BaseModel:
 
     def __init__(self, *args, **kwargs):
         if kwargs:
-            for key, value in kwargs.items:
+            for key, value in kwargs.items():
                 # checking items in
                 if key != "__class__":
 
