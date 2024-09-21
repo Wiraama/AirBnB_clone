@@ -2,7 +2,8 @@
 import sys
 import os
 import unittest
-from datetime import datetime
+from datetime import datetime, timedelta
+import time
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -26,10 +27,11 @@ class TestBaseModel(unittest.TestCase):
 
     def test_save_method(self):
         """ tests if safe method update or not """
-        old = self.model.updated_at
-        self.model.save()
-        self.assertGreater(self.model.updated_at, old)
-        print("OK")
+        obj = BaseModel()
+        initial_updated_at = obj.updated_at
+        time.sleep(1)
+        obj.save()
+        self.assertGreater(obj.updated_at, initial_updated_at)
 
     def test_to_dict_method(self):
         """ test to check if returned is dictionary with correct keys """
@@ -42,7 +44,6 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(model_dict['__class__'], 'BaseModel')
         self.assertEqual(model_dict['created_at'], self.model.created_at.isoformat())
         self.assertEqual(model_dict['updated_at'], self.model.updated_at.isoformat())
-        print("OK")
 
 
 
@@ -50,7 +51,6 @@ class TestBaseModel(unittest.TestCase):
         """ test if correct string is returned from __str__ """
         expect_str = "[BaseModel] ({}) {}".format(self.model.id, self.model.__dict__)
         self.assertEqual(str(self.model), expect_str)
-        print("OK")
 
 
 if __name__ == '__main__':
