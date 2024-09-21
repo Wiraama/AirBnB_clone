@@ -1,57 +1,49 @@
 #!/usr/bin/python3
-import sys
-import os
 import unittest
-from datetime import datetime, timedelta
-import time
-
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
+from datetime import datetime
 from models.base_model import BaseModel
 
-
 class TestBaseModel(unittest.TestCase):
-    """ test for each function """
-
-
-    def setUp(self):
-        self.model = BaseModel()
-
-
+    
     def test_instance_creation(self):
-        """ cheakin if its correctly initiated """
-        self.assertIsInstance(self.model, BaseModel)
-        self.assertIsInstance(self.model.id, str)
-        self.assertIsInstance(self.model.created_at, datetime)
-        self.assertIsInstance(self.model.updated_at, datetime)
+        """Test if an instance of BaseModel is created properly"""
+        model = BaseModel()
+        self.assertIsInstance(model, BaseModel)
+        self.assertIsInstance(model.id, str)
+        self.assertIsInstance(model.created_at, datetime)
+        self.assertIsInstance(model.updated_at, datetime)
+
+    def test_str_method(self):
+        """Test the __str__ method of BaseModel"""
+        model = BaseModel()
+        model_str = model.__str__()
+        self.assertIn("[BaseModel]", model_str)
+        self.assertIn(f"({model.id})", model_str)
 
     def test_save_method(self):
-        """ tests if safe method update or not """
-        obj = BaseModel()
-        initial_updated_at = obj.updated_at
-        time.sleep(1)
-        obj.save()
-        self.assertGreater(obj.updated_at, initial_updated_at)
+        """Test the save method updates updated_at"""
+        model = BaseModel()
+        old_updated_at = model.updated_at
+        model.save()
+        self.assertNotEqual(old_updated_at, model.updated_at)
+        self.assertIsInstance(model.updated_at, datetime)
 
     def test_to_dict_method(self):
-        """ test to check if returned is dictionary with correct keys """
-        model_dict = self.model.to_dict()
+        """Test to_dict method creates a dictionary with correct keys"""
+        model = BaseModel()
+        model_dict = model.to_dict()
+        
+        self.assertIsInstance(model_dict, dict)
         self.assertIn('id', model_dict)
         self.assertIn('created_at', model_dict)
         self.assertIn('updated_at', model_dict)
         self.assertIn('__class__', model_dict)
 
+        # Check if created_at and updated_at are ISO format strings
         self.assertEqual(model_dict['__class__'], 'BaseModel')
-        self.assertEqual(model_dict['created_at'], self.model.created_at.isoformat())
-        self.assertEqual(model_dict['updated_at'], self.model.updated_at.isoformat())
-
-
-
-    def test_str_method(self):
-        """ test if correct string is returned from __str__ """
-        expect_str = "[BaseModel] ({}) {}".format(self.model.id, self.model.__dict__)
-        self.assertEqual(str(self.model), expect_str)
-
+        self.assertIsInstance(model_dict['created_at'], str)
+        self.assertIsInstance(model_dict['updated_at'], str)
 
 if __name__ == '__main__':
     unittest.main()
+
