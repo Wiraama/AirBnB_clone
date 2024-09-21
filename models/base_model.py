@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import uuid
 from datetime import datetime
-
+from models import storage
 
 class BaseModel:
     """ this class should define all attributes/methods for other classes """
@@ -20,9 +20,11 @@ class BaseModel:
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
             self.id = str(uuid.uuid4())
+            storage.new(self)
 
     def save(self):
         self.updated_at = datetime.now()
+        storage.save()
     
 
     def to_dict(self):
